@@ -1,0 +1,112 @@
+import FormInputField from '@components/FormInputField';
+import useForgotPassUser from '@store/forgotPassUser';
+import useRegUsers from '@store/regUsers';
+import * as z from 'zod';
+import { useState } from 'react'
+import FormSubmitButton from '@components/FormSubmitButton';
+import { useNavigate } from 'react-router-dom';
+
+
+type FormValues = {
+    password: string;
+    confirmPassword: string;
+}
+
+type FormErrors = {
+    password?: string;
+    confirmPassword?: string;
+}
+
+
+const ResetPassword = () => {
+
+    const navigate = useNavigate();
+
+    const forgotPassUser = useForgotPassUser(state => state.forgotPassUser);
+    const changePassword = useRegUsers(state=>state.changePassword);
+
+    const [formValues, setFormValues] = useState<FormValues>({
+        password: '',
+        confirmPassword: '',
+    })
+
+    const [formErrors, setFormErrors] = useState<FormErrors>({});
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormValues({
+            ...formValues,
+            [e.target.name]:e.target.value
+        })
+    }
+
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setFormErrors({});
+
+        try {
+            // Validation
+            const result = validationSchema.safeParse(formValues);
+            if (!result.success) {
+                const validationErrors: FormErrors = {};
+                result.error.errors.forEach((err) => {
+                    validationErrors[err.path[0] as keyof FormErrors]=err.message;
+                });
+                throw validationErrors;
+            }
+            // Change Password
+            changePassword({
+                email: forgotPassUser.email,
+                newPassword: formValues.password,
+            });
+
+            setFormValues({
+                password: '',
+                confirmPassword: '',
+            });
+
+            navigate('/');
+
+        } catch (err) {
+            setFormErrors(err as FormErrors);
+        }
+    }
+
+    const validationSchema = z.default.object({
+        password: z.default.string().nonempty().min(8).max(24),
+        confirmPassword: z.default.string().nonempty(),
+    }).refine((data) => data.confirmPassword===data.password, {message: "Passwords don't match", path: ['confirmPassword']});
+
+    return (
+    <>
+    <h1 className='text-xl font-semibold text-center'>Create New Password</h1>
+    <p className='text-center text-xxs text-[#33333380]'>Secure your account with a new password</p>
+
+    <form onSubmit={handleFormSubmit} className='mt-4 space-y-4'>
+
+        <FormInputField
+        label={"Password"}
+        type={"password"}
+        name={"password"}
+        placeholder={"Enter your password"}
+        value={formValues.password}
+        onChange={handleInputChange}
+        error={formErrors.password} />
+
+        <FormInputField
+        label={"Confirm Password"}
+        type={"password"}
+        name={"confirmPassword"}
+        placeholder={"Enter your password again"}
+        value={formValues.confirmPassword}
+        onChange={handleInputChange}
+        error={formErrors.confirmPassword} />
+
+        <FormSubmitButton
+        text={"Reset Password"}/>
+
+    </form>
+    </>
+    )
+}
+
+export default ResetPassword;
