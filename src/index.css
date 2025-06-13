@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+@import "tailwindcss";
+
+@layer utilities {
+    .font-roboto {
+        font-family: 'Roboto Flex', sans-serif;
+    }
+    .font-inter {
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+@theme {
+    --breakpoint-xs: 30rem;
+    --breakpoint-xxs: 25rem;
+    --text-xxs: 0.625rem;
+}
