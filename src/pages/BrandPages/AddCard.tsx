@@ -12,8 +12,6 @@ import { useNavigate, useParams } from "react-router-dom";
 const AddCard = () => {
 
   const addCard = useSavedCards(state => state.addCard);
-  // const savedCards = useSavedCards(state => state.savedCards);
-  // console.log(savedCards)
   const {username} = useParams();
   const navigate = useNavigate();
 
@@ -81,10 +79,10 @@ const AddCard = () => {
   }
 
   const validationSchema = z.default.object({
-    cardHolderName: z.default.string().nonempty(),
-    cardNumber: z.default.string().nonempty(),
-    expiryDate: z.default.string().nonempty(),
-    cvc: z.default.string().nonempty(),
+    cardHolderName: z.default.string().nonempty("Name can not be empty!"),
+    cardNumber: z.default.string().nonempty("Please provide the card number!"),
+    expiryDate: z.default.string().nonempty("Please provide the expiry date!"),
+    cvc: z.default.string().nonempty("Please provide the password"),
   })
 
   const resetForm = () => {
