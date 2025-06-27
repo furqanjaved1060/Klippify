@@ -78,8 +78,8 @@ const SignInPage = () => {
   }
 
   const validationSchema = z.default.object({
-    email: z.default.string().email().nonempty(),
-    password: z.default.string().nonempty(),
+    email: z.default.string().email().nonempty("Email can not be empty!"),
+    password: z.default.string().nonempty("Password can not be empty!"),
   })
   
 

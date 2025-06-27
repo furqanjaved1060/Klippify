@@ -70,8 +70,8 @@ const ResetPassword = () => {
     }
 
     const validationSchema = z.default.object({
-        password: z.default.string().nonempty().min(8).max(24),
-        confirmPassword: z.default.string().nonempty(),
+        password: z.default.string().nonempty().min(8, "Password must contain atleast 8 characters!").max(24, "Password can not contain more than 24 characters!"),
+        confirmPassword: z.default.string().nonempty("Confirm password can not be empty!"),
     }).refine((data) => data.confirmPassword===data.password, {message: "Passwords don't match", path: ['confirmPassword']});
 
     return (
