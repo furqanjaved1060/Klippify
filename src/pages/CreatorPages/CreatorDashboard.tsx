@@ -2,15 +2,11 @@ import earnings from '@assets/earnings.png'
 import money from '@assets/money.png'
 import tick from '@assets/tick.png'
 import rating from '@assets/rating.png'
-import CampaignStats from '@components/Profile-Page/CampaignStats';
-import CreatorDashboardItem from '@components/Profile-Page/CreatorDashboardItem';
-import PaymentsStats from '@components/Profile-Page/PaymentsStats';
-import SelectionButtons from '@components/Profile-Page/SelectionButtons';
-import { Link, useParams } from 'react-router-dom';
+import CDCampaigns from '@components/Creator-Pages/CDCampaigns';
+import CDPayments from '@components/Creator-Pages/CDPayments';
+import CreatorDashboardItem from '@components/Creator-Pages/CreatorDashboardItem';
 
 const CreatorDashboard = () => {
-
-  const {username} = useParams();
 
   return (
     <>
@@ -54,52 +50,9 @@ const CreatorDashboard = () => {
 
       <div className='flex flex-col sm:flex-row gap-3'>
 
-        <div className='h-[260px] p-3 space-y-3 bg-white rounded-lg flex-grow'>
+        <CDCampaigns/>
 
-          <h2 className='text-lg font-semibold leading-none'>Campaigns</h2>
-
-          <SelectionButtons 
-          buttons={["active", "past", "waitlist"]}/>
-
-          <div className='h-[140px] overflow-hidden'>
-
-            <ul className='grid grid-cols-[repeat(auto-fit,215px)] grid-rows-2 overflow-y-hidden gap-3'>
-              <CampaignStats/>
-            </ul>
-            
-          </div>
-          
-          <div className='flex justify-center'>
-            <Link to={`/${username}/campaigns`} className='p-1.25 text-[9px] font-semibold text-[#007EFF] bg-[#007EFF1A] rounded-lg cursor-pointer' >View All</Link>
-          </div>
-
-        </div>
-
-        <div className='p-3 space-y-3 bg-white rounded-lg w-full sm:w-[24.75%] min-w-60'>
-
-          <h2 className='text-lg font-semibold leading-none'>Payments</h2>
-
-          <SelectionButtons 
-          buttons={["monthly", "weekly", "today"]}/>
-
-          <div className='h-[140px] overflow-y-hidden'>
-
-            <ul className='space-y-3'>
-
-              <PaymentsStats/>
-              <PaymentsStats/>
-              <PaymentsStats/>
-              <PaymentsStats/>
-
-            </ul>
-
-          </div>
-
-          <div className='flex justify-center'>
-            <button className='p-1.25 text-[9px] font-semibold text-[#007EFF] bg-[#007EFF1A] rounded-lg cursor-pointer'>View All</button>
-          </div>
-
-        </div>
+        <CDPayments/>
 
       </div>
     </>

@@ -1,5 +1,5 @@
-import FormInputField from '@components/FormInputField'
-import FormSubmitButton from '@components/FormSubmitButton';
+import FormInputField from '@components/Auth-Pages/FormInputField'
+import FormSubmitButton from '@components/Auth-Pages/FormSubmitButton';
 import useRegUsers from '@store/regUsers';
 import { useState } from 'react'
 import * as z from 'zod';
@@ -16,7 +16,13 @@ const ForgotPassword = () => {
     const regUsers = useRegUsers(state=>state.regUsers);
 
     const [email, setEmail] = useState<string>('');
+    
     const [emailError, setEmailError] = useState<string>('');
+
+    const handleInputChange = (name:string, value:string) => {
+        console.log(name)
+        setEmail(value);
+    }
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -61,7 +67,7 @@ const ForgotPassword = () => {
             name={"email"}
             placeholder={"Enter your email"}
             value={email}
-            onChange={(e:React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+            onChange={handleInputChange}
             error={emailError} />
 
             <FormSubmitButton

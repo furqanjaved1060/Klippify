@@ -1,6 +1,6 @@
-import AuthHeader from '@components/AuthHeader'
-import AuthSideBar from '@components/AuthSideBar'
-import AuthMain from '@components/AuthMain'
+import AuthHeader from '@components/Auth-Pages/AuthHeader'
+import AuthSideBar from '@components/Auth-Pages/AuthSideBar'
+import AuthMain from '@components/Auth-Pages/AuthMain'
 
 const AuthPagesLayout = () => {
 
@@ -8,7 +8,7 @@ const AuthPagesLayout = () => {
     <>
     <div className='bg-[#000C21]'>
 
-      <div className="max-w-[1440px] min-h-screen p-2 m-auto flex gap-[.625rem]">
+      <div className="min-h-screen p-2 flex gap-[.625rem]">
 
         <AuthSideBar />
 

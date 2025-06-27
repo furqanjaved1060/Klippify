@@ -1,7 +1,7 @@
-import FormInputField from '@components/FormInputField';
-import FormPlanField from '@components/FormPlanField';
-import FormSubmitButton from '@components/FormSubmitButton';
-import ThirdPartyAuth from '@components/ThirdPartyAuth';
+import FormInputField from '@components/Auth-Pages/FormInputField';
+import FormPlanField from '@components/Auth-Pages/FormPlanField';
+import FormSubmitButton from '@components/Auth-Pages/FormSubmitButton';
+import ThirdPartyAuth from '@components/Auth-Pages/ThirdPartyAuth';
 import useAuthUser from '@store/authUser';
 import useRegUsers from '@store/regUsers';
 import { useState } from 'react';
@@ -34,10 +34,10 @@ const SignInPage = () => {
 
   const [formErrors, setFormErrors] = useState<FormErrors>({});
 
-  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (name:string, value:string) => {
     setFormValues({
         ...formValues,
-        [e.target.name]:e.target.value
+        [name]:value
     })
   }
 
@@ -61,12 +61,7 @@ const SignInPage = () => {
         throw {authentication: "invalid email or password"}
       }
       // SignIn Success
-      login({
-        role: matchedUser.role,
-        fullName: matchedUser.fullName,
-        email: matchedUser.email,
-        token: matchedUser.token,
-      })
+      login(matchedUser);
 
       setFormValues({
         role: 'creator',
@@ -74,6 +69,7 @@ const SignInPage = () => {
         password: '',
       });
 
+      // Redirect
       navigate(`/${matchedUser.fullName.split(' ').join('')}`);
 
     } catch (err) {
@@ -92,7 +88,7 @@ const SignInPage = () => {
     <>
     <h1 className='text-xl font-semibold text-center'>Get Started</h1>
 
-    <form onSubmit={handleFormSubmit} className='space-y-4'>
+    <form onSubmit={handleFormSubmit} className='space-y-4 relative'>
 
       <FormPlanField
       onChange={handleInputChange}
@@ -114,7 +110,8 @@ const SignInPage = () => {
       placeholder={"Enter your password"}
       value={formValues.password}
       onChange={handleInputChange}
-      error={formErrors.password} />
+      error={formErrors.password || formErrors.authentication}
+      passBtn={true} />
 
       <div className='mb-5 flex justify-between items-center'>
         <div className='flex items-center gap-2'>
@@ -126,8 +123,6 @@ const SignInPage = () => {
         </div>
         <Link to='/forgotpassword' className='text-[#33333380] text-xxs'>Forgot password?</Link>
       </div>
-
-      {formErrors.authentication && <div className='text-red-500'>{formErrors.authentication}</div>}
 
       <FormSubmitButton
       text={"Sign In"}/>  

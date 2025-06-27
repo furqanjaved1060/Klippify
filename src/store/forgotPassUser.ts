@@ -17,6 +17,7 @@ const useForgotPassUser = create<UseForgotPassUser>((set) => ({
     },
     setForgotPassUser: (email) => {
         set(state => ({
+            ...state,
             forgotPassUser: {
                 email: email.trim().toLowerCase(),
             }

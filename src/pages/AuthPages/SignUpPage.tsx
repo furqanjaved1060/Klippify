@@ -1,8 +1,8 @@
-import FormSubmitButton from '@components/FormSubmitButton';
-import FormInputField from '@components/FormInputField';
-import FormPlanField from '@components/FormPlanField';
+import FormSubmitButton from '@components/Auth-Pages/FormSubmitButton';
+import FormInputField from '@components/Auth-Pages/FormInputField';
+import FormPlanField from '@components/Auth-Pages/FormPlanField';
 import useRegUsers from '@store/regUsers';
-import ThirdPartyAuth from '@components/ThirdPartyAuth';
+import ThirdPartyAuth from '@components/Auth-Pages/ThirdPartyAuth';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import * as z from 'zod'
@@ -38,10 +38,10 @@ const SignUpPage = () => {
 
     const [formErrors, setFormErrors] = useState<FormErrors>({});
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+    const handleInputChange = (name:string, value:string):void => {
         setFormValues({
             ...formValues,
-            [e.target.name]:e.target.value
+            [name]:value
         })
     }
 
@@ -80,7 +80,7 @@ const SignUpPage = () => {
                 password: '',
                 confirmPassword: '',              
             })
-            navigate('/');
+            navigate('/signin');
 
         } catch (err) {
             setFormErrors(err as FormErrors);
@@ -131,7 +131,8 @@ const SignUpPage = () => {
         placeholder={"Enter your password"}
         value={formValues.password}
         onChange={handleInputChange}
-        error={formErrors.password} />
+        error={formErrors.password}
+        passBtn={true} />
 
         <FormInputField
         label={"Confirm Password"}
@@ -140,7 +141,8 @@ const SignUpPage = () => {
         placeholder={"Enter your password again"}
         value={formValues.confirmPassword}
         onChange={handleInputChange}
-        error={formErrors.confirmPassword} />
+        error={formErrors.confirmPassword}
+        passBtn={true} />
 
         <FormSubmitButton text={"Create Account"}/>
 

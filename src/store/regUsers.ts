@@ -8,25 +8,31 @@ type RegUserObj = {
     email: string;
     password: string;
     token: string;
+    bio?: string;
+    locaiton?: string;
+    desc?: string;
+    category?: string[];
+    avatar?: File | null;
 }
 
-type RegUsers = RegUserObj[];
 
 type AddUser = (user: {role:string; fullName:string; email:string; password:string;}) => void;
 
-type ChangePassword = (user: {email:string; newPassword:string;}) => void;
-
 type UseRegUsers = {
-    regUsers: RegUsers;
+    regUsers: RegUserObj[];
     addUser: AddUser;
-    changePassword: ChangePassword;
+    editUser: (newData:RegUserObj, userToBeEditedEmail:string) => void;
+    changePassword: (email:string, newPassword:string) => void;
 }
 
 const useRegUsers = create<UseRegUsers>()(   
     persist((set) => ({
+
         regUsers: [],
+
         addUser: ({role, fullName, email, password}) => {
             set((state) => ({
+                ...state,
                 regUsers: [...state.regUsers, {
                     role: role as 'creator' | 'brand',
                     fullName: fullName.trim().split(" ").filter((curElem)=>curElem!=="").join(" ").toLowerCase(),
@@ -36,14 +42,23 @@ const useRegUsers = create<UseRegUsers>()(
                 }]
             }))
         },
-        changePassword: ({email, newPassword}) => {
+
+        editUser: (newData, userToBeEditedEmail) => {
+            set((state) => ({
+                ...state,
+                regUsers: state.regUsers.map((curUser: RegUserObj) => curUser.email===userToBeEditedEmail ? newData : curUser)
+            }))
+        },
+
+        changePassword: (email, newPassword) => {
             set((state) => ({
                 regUsers: state.regUsers.map((curUser: RegUserObj) => curUser.email===email ? {...curUser, password: newPassword} : curUser)
             }))
-        }
+        },
+
     }),
     {name:'regUsers'})
 )
 export default useRegUsers;
 
-// create(persist((set) => ({}), {name: "regUsers"}));
+// // create(persist((set) => ({}), {name: "regUsers"}));

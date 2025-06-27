@@ -1,9 +1,9 @@
-import FormInputField from '@components/FormInputField';
+import FormInputField from '@components/Auth-Pages/FormInputField';
 import useForgotPassUser from '@store/forgotPassUser';
 import useRegUsers from '@store/regUsers';
 import * as z from 'zod';
 import { useState } from 'react'
-import FormSubmitButton from '@components/FormSubmitButton';
+import FormSubmitButton from '@components/Auth-Pages/FormSubmitButton';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -23,6 +23,7 @@ const ResetPassword = () => {
     const navigate = useNavigate();
 
     const forgotPassUser = useForgotPassUser(state => state.forgotPassUser);
+
     const changePassword = useRegUsers(state=>state.changePassword);
 
     const [formValues, setFormValues] = useState<FormValues>({
@@ -32,10 +33,10 @@ const ResetPassword = () => {
 
     const [formErrors, setFormErrors] = useState<FormErrors>({});
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (name:string, value:string) => {
         setFormValues({
             ...formValues,
-            [e.target.name]:e.target.value
+            [name]:value
         })
     }
 
@@ -54,17 +55,14 @@ const ResetPassword = () => {
                 throw validationErrors;
             }
             // Change Password
-            changePassword({
-                email: forgotPassUser.email,
-                newPassword: formValues.password,
-            });
+            changePassword(forgotPassUser.email, formValues.password);
 
             setFormValues({
                 password: '',
                 confirmPassword: '',
             });
 
-            navigate('/');
+            navigate('/signin');
 
         } catch (err) {
             setFormErrors(err as FormErrors);

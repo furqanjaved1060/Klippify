@@ -1,13 +1,13 @@
-import CampaignDetailsCard from '@components/Profile-Page/CampaignDetailsCard'
-import DesReq from '@components/Profile-Page/DesReq'
-import ManCampContCard from '@components/Profile-Page/ManCampContCard'
-import ManCampContTable from '@components/Profile-Page/ManCampContTable'
+import CampaignDetailsCard from '@components/Creator-Pages/CampaignDetailsCard'
+import DesReq from '@components/Creator-Pages/DesReq'
+import ManCampContCard from '@components/Creator-Pages/ManCampContCard'
+import ManCampContTable from '@components/Creator-Pages/ManCampContTable'
 
 const CampaignDetail = () => {
 
   return (
 
-  <div className='p-3 space-y-3 bg-white rounded-lg'>
+  <div className='flex-grow p-3 space-y-3 bg-white rounded-lg'>
 
     <section className="space-y-3">
 
@@ -21,7 +21,7 @@ const CampaignDetail = () => {
 
       <CampaignDetailsCard/>
 
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-3 justify-between">
 
         <DesReq/>
 
