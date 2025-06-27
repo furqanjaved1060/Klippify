@@ -15,44 +15,49 @@ const SavedCards = () => {
 
     return (
 
-        <section className='p-3 space-y-3 bg-white rounded-lg flex-grow flex flex-col gap-10 xs:gap-0'>
+        <section className='p-3 space-y-3 bg-white rounded-lg flex-grow'>
 
             <div className='flex items-center justify-between'>
                 <h2 className='text-lg font-semibold leading-none'>Saved Cards</h2>
                 <Link to={`/${username}/payments/details`} className='py-2.5 px-5 font-roboto text-xxs font-medium text-white bg-gradient-to-r from-[#333EFF] to-[#5BCAFF] rounded-lg flex items-center gap-2'><PlusIcon/>Add a Card</Link>
             </div>
 
-            <Table
-            headings={['Card Type', 'Card Number', 'Expiration Date', 'Card Holder Name', 'Set Default', 'Action']}
-            rows={
-                savedCards.map((curCard, curIndex) => {
-                    const {type, number, expiry, holderName} = curCard;
-                                   
-                    return (
-                        <>
-                        <td className="px-3">{type.charAt(0).toUpperCase() + type.slice(1)}</td>
-                        <td className="px-3">{number}</td>
-                        <td className="px-3 text-center">{expiry}</td>
-                        <td className="px-3 text-center">{holderName}</td>
-                        <td className="px-3">
-                            <div className="">
-                                <input
-                                    type="checkbox"
-                                    id="setDefaultCard"
-                                    className="hidden"
-                                    defaultChecked={curIndex===0}
-                                    onChange={(e) => console.log(e.target.checked)}
-                                />
-                                <label htmlFor="setDefaultCard" onClick={() => setToggle({toggle: !toggle.toggle, index: curIndex})} className={`h-4 w-8 mx-auto rounded-full cursor-pointer flex items-center ${toggle.toggle && curIndex===toggle.index ? 'bg-[#007EFF]' : 'bg-[#D1D1D6]'}`}>
-                                    <span className={`h-3 w-3 bg-white rounded-full mx-[2.5px] transition duration-300 ${toggle.toggle && curIndex===toggle.index && 'translate-x-[16px]'}`}></span>
-                                </label>
-                            </div>
-                        </td>
-                        <td className="px-3 text-center"><button className="cursor-pointer" onClick={() => delCard(curCard)}><BinIcon/></button></td>
-                        </>
-                    )
-                })
-            } />
+            <div className="w-full overflow-x-scroll">
+
+                <Table
+                scroll={true}
+                headings={['Card Type', 'Card Number', 'Expiration Date', 'Card Holder Name', 'Set Default', 'Action']}
+                rows={
+                    savedCards.map((curCard, curIndex) => {
+                        const {type, number, expiry, holderName} = curCard;
+                                    
+                        return (
+                            <>
+                            <td className="px-3">{type.charAt(0).toUpperCase() + type.slice(1)}</td>
+                            <td className="px-3">{number}</td>
+                            <td className="px-3 text-center">{expiry}</td>
+                            <td className="px-3 text-center">{holderName}</td>
+                            <td className="px-3">
+                                <div className="">
+                                    <input
+                                        type="checkbox"
+                                        id="setDefaultCard"
+                                        className="hidden"
+                                        defaultChecked={curIndex===0}
+                                        onChange={(e) => console.log(e.target.checked)}
+                                    />
+                                    <label htmlFor="setDefaultCard" onClick={() => setToggle({toggle: !toggle.toggle, index: curIndex})} className={`h-4 w-8 mx-auto rounded-full cursor-pointer flex items-center ${toggle.toggle && curIndex===toggle.index ? 'bg-[#007EFF]' : 'bg-[#D1D1D6]'}`}>
+                                        <span className={`h-3 w-3 bg-white rounded-full mx-[2.5px] transition duration-300 ${toggle.toggle && curIndex===toggle.index && 'translate-x-[16px]'}`}></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td className="px-3 text-center"><button className="cursor-pointer" onClick={() => delCard(curCard)}><BinIcon/></button></td>
+                            </>
+                        )
+                    })
+                } />
+
+            </div>
 
         </section>
 
