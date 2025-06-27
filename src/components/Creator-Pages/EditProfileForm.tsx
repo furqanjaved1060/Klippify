@@ -112,13 +112,13 @@ const EditProfileForm = () => {
     }
 
     const validationSchema = z.default.object({
-        firstName: z.default.string().min(3).max(12),
-        lastName: z.default.string().min(3).max(12),
-        email: z.default.string().email().nonempty(),
-        bio: z.default.string().max(48).nonempty(),
-        location: z.default.string().max(18).nonempty(),
-        password: z.default.string().min(8).max(24),
-        confirmPassword: z.default.string(),
+        firstName: z.default.string().min(3, "First Name must contain atleast 3 characters!").max(24, "First Name can not contain more than 24 characters!"),
+        lastName: z.default.string().min(3, "Last Name must contain atleast 3 characters!").max(24, "Last Name can not contain more than 24 characters!"),
+        email: z.default.string().email().nonempty("Email can not be empty!"),
+        bio: z.default.string().nonempty("Bio can not be empty!").max(48, "Bio can not contain more than 48 characters"),
+        location: z.default.string().nonempty("Please provide a location!").max(18, "Bio can not contain more than 18 characters"),
+        password: z.default.string().min(8, "Password must contain atleast 8 characters!").max(24, "Password can not contain more than 24 characters!"),
+        confirmPassword: z.default.string().nonempty("Confirm password can not be empty!"),
     }).refine((data) => data.confirmPassword===data.password, {message: "Passwords don't match", path: ['confirmPassword']});
 
 
