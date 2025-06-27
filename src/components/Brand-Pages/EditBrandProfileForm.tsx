@@ -133,12 +133,12 @@ const EditBrandProfileForm = () => {
     }
 
     const validationSchema = z.default.object({
-        fullName: z.default.string().min(3).max(18),
-        email: z.default.string().email().nonempty(),
-        desc: z.default.string().nonempty(),
+        fullName: z.default.string().nonempty("Full Name can not be empty!").min(3, "Name must contain atleast 3 characters!").max(24, "Name can not contain more than 24 characters!"),
+        email: z.default.string().email().nonempty("Email can not be empty!"),
+        desc: z.default.string().nonempty("Please provide a brand description!"),
         category: z.default.array(z.default.string()).min(1, "Please choose atleast 1 category"),
-        password: z.default.string().min(8).max(24),
-        confirmPassword: z.default.string(),
+        password: z.default.string().nonempty("Password can not be empty!").min(8, "Password must contain atleast 8 characters!").max(24, "Password can not contain more than 24 characters!"),
+        confirmPassword: z.default.string().nonempty("Confirm password can not be empty!"),
     }).refine((data) => data.confirmPassword===data.password, {message: "Passwords don't match", path: ['confirmPassword']});
 
 
