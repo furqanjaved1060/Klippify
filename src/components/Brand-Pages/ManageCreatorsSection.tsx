@@ -85,68 +85,74 @@ const ManageCreatorsSection = () => {
             activeBtn={activeBtn}
             setActiveBtn={setActiveBtn}/>
 
-            {activeBtn==="joined" &&
+            <div className="overflow-x-scroll">
 
-                <Table
-                headings={["Creators", "Username", "Total Earnings", "Total Views", "Action"]}
-                rows={
-                    rowsDataJoinedCreators.map((curRowData) => {
+                {activeBtn==="joined" &&
 
-                        const {name, avatar, userName, totalEarnings, totalViews} = curRowData;
+                    <Table
+                    scroll={true}
+                    headings={["Creators", "Username", "Total Earnings", "Total Views", "Action"]}
+                    rows={
+                        rowsDataJoinedCreators.map((curRowData) => {
 
-                        return (
-                            <>
-                            <td className="px-3"><div className="flex items-center gap-1"><img src={avatar} alt="" className="size-5" />{name}</div></td>
-                            <td className="px-3">{userName}</td>
-                            <td className="px-3 text-center">{totalEarnings}</td>
-                            <td className="px-3 text-center">{totalViews}</td>
-                            <td className="px-3 text-center">
-                                <button type='button' className="p-[1px] bg-gradient-to-r from-[#333EFF] to-[#5BCAFF] rounded-md cursor-pointer">
-                                    <div className="px-3 py-1.5 bg-white text-[#007EFF] rounded-md leading-none">
-                                        view details
+                            const {name, avatar, userName, totalEarnings, totalViews} = curRowData;
+
+                            return (
+                                <>
+                                <td className="px-3"><div className="flex items-center gap-1"><img src={avatar} alt="" className="size-5" />{name}</div></td>
+                                <td className="px-3">{userName}</td>
+                                <td className="px-3 text-center">{totalEarnings}</td>
+                                <td className="px-3 text-center">{totalViews}</td>
+                                <td className="px-3 text-center">
+                                    <button type='button' className="p-[1px] bg-gradient-to-r from-[#333EFF] to-[#5BCAFF] rounded-md cursor-pointer">
+                                        <div className="px-3 py-1.5 bg-white text-[#007EFF] rounded-md leading-none">
+                                            view details
+                                        </div>
+                                    </button>
+                                </td>
+                                </>
+                            )
+                        })
+                    }/>
+                }
+
+                {activeBtn==="requested" &&
+
+                    <Table
+                    scroll={true}
+                    headings={["Creators", "Platform", "Username", "Actions"]}
+                    rows={
+                        rowsDataRequestedCreators.map((curRowData) => {
+
+                            const {name, avatar, userName, platform} = curRowData;
+
+                            return (
+                                <>
+                                <td className="px-3"><div className="flex items-center gap-1"><img src={avatar} alt="" className="size-5" />{name}</div></td>
+                                <td className="px-3">
+                                    <div className="flex items-center gap-2">
+                                        {platform.map((curPlatform) => (
+                                            <img 
+                                            src={curPlatform === "instagram" ? insta : curPlatform === "tiktok" ? tiktok : curPlatform === "facebook" ? facebook : curPlatform === "x" ? x : ""} 
+                                            alt="" 
+                                            className="size-4" />
+                                        ))}
                                     </div>
-                                </button>
-                            </td>
-                            </>
-                        )
-                    })
-                }/>
-            }
+                                </td>
+                                <td className="px-3 text-center">{userName}</td>
+                                <td className="px-3 text-center">
+                                    <div className="space-x-2">
+                                        <button type='button' className="py-1.5 px-3 text-[white] bg-gradient-to-r from-[#333EFF] to-[#5BCAFF] rounded-md leading-none cursor-pointer">Accept</button>
+                                        <button type='button' className="py-1.25 px-3 border-1 border-[#D6D6D6] rounded-md leading-none cursor-pointer">Reject</button>
+                                    </div>
+                                </td>
+                                </>
+                            )
+                        })
+                    }/>
+                }
 
-            {activeBtn==="requested" &&
-
-                <Table
-                headings={["Creators", "Platform", "Username", "Actions"]}
-                rows={
-                    rowsDataRequestedCreators.map((curRowData) => {
-
-                        const {name, avatar, userName, platform} = curRowData;
-
-                        return (
-                            <>
-                            <td className="px-3"><div className="flex items-center gap-1"><img src={avatar} alt="" className="size-5" />{name}</div></td>
-                            <td className="px-3">
-                                <div className="flex items-center gap-2">
-                                    {platform.map((curPlatform) => (
-                                        <img 
-                                        src={curPlatform === "instagram" ? insta : curPlatform === "tiktok" ? tiktok : curPlatform === "facebook" ? facebook : curPlatform === "x" ? x : ""} 
-                                        alt="" 
-                                        className="size-4" />
-                                    ))}
-                                </div>
-                            </td>
-                            <td className="px-3 text-center">{userName}</td>
-                            <td className="px-3 text-center">
-                                <div className="space-x-2">
-                                    <button type='button' className="py-1.5 px-3 text-[white] bg-gradient-to-r from-[#333EFF] to-[#5BCAFF] rounded-md leading-none cursor-pointer">Accept</button>
-                                    <button type='button' className="py-1.25 px-3 border-1 border-[#D6D6D6] rounded-md leading-none cursor-pointer">Reject</button>
-                                </div>
-                            </td>
-                            </>
-                        )
-                    })
-                }/>
-            }
+            </div>
 
         </section>
     )
