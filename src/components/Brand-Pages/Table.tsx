@@ -5,11 +5,12 @@ import type { JSX } from "react";
 type TableProps = {
     headings: string[];
     rows: JSX.Element[];
+    scroll?: boolean;
 }
 
-const Table: React.FC<TableProps> = ({headings, rows}) => {
+const Table: React.FC<TableProps> = ({headings, rows, scroll}) => {
     return (
-        <table className='w-full'>
+        <table className={`w-full  ${scroll && 'min-w-[600px]'}`}>
         
             <thead>
                 <tr className='h-8 text-xxs text-[#333333A6] bg-[#f5f5f5]'>
